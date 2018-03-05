@@ -15,7 +15,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let nowPlayingNavigationController = storyboard.instantiateViewController(withIdentifier: "DiscoverNavigationController") as! UINavigationController
+        let nowPlayingViewController =  nowPlayingNavigationController.topViewController as! DiscoverViewController
+        nowPlayingViewController.endpoint = "movie/now_playing"
+//        nowPlayingViewController.navTitle = "New Movies"
+//        nowPlayingNavigationController.tabBarItem.title = "Now Playing"
+//        nowPlayingNavigationController.tabBarItem.image = UIImage(named: "tickets")
+        
+        window?.rootViewController = nowPlayingNavigationController
+        window?.makeKeyAndVisible()
+        
         return true
     }
 
