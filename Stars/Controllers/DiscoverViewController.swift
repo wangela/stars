@@ -8,10 +8,12 @@
 
 import UIKit
 import AFNetworking
+import MBProgressHUD
+import SwiftyJSON
 
-class DiscoverViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class DiscoverViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    @IBOutlet weak var discoverCollection: UICollectionView!
+    @IBOutlet weak var discoverTableView: UITableView!
     
     var moviesDict: [[String: Any]] = [[String: Any]]()
     var endpoint: String?
@@ -19,11 +21,20 @@ class DiscoverViewController: UIViewController, UICollectionViewDataSource, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        calculateWidths()
-        discoverCollection.dataSource = self
-        discoverCollection.delegate = self
+        discoverTableView.dataSource = self
+        discoverTableView.delegate = self
         
         networkRequest(endpoint: endpoint!)
+        
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.isTranslucent = false
+            navigationBar.barStyle = UIBarStyle.black
+            navigationBar.titleTextAttributes = [
+                NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.thin),
+                NSAttributedStringKey.foregroundColor: UIColor(red: 255.0/255.0, green: 212.0/255.0, blue: 13.0/255.0, alpha: 1.0)
+            ]
+        }
+        self.title = "Now Playing"
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,6 +47,7 @@ class DiscoverViewController: UIViewController, UICollectionViewDataSource, UICo
         let url = URL(string:"https://api.themoviedb.org/3/\(endpoint)?api_key=\(apiKey)")
         var request = URLRequest(url: url!)
         request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        
         let session = URLSession(
             configuration: URLSessionConfiguration.default,
             delegate:nil,
@@ -43,7 +55,7 @@ class DiscoverViewController: UIViewController, UICollectionViewDataSource, UICo
         )
         
         // Display HUD just before the request is made
-        // MBProgressHUD.showAdded(to: self.view, animated: true)
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         
         let task : URLSessionDataTask = session.dataTask(with: request, completionHandler: { (dataOrNil, response, error) in
             if error != nil {
@@ -53,21 +65,24 @@ class DiscoverViewController: UIViewController, UICollectionViewDataSource, UICo
 //                self.refreshCollectionControl.endRefreshing()
                 
                 // Hide HUD to allow refresh
-//                MBProgressHUD.hide(for: self.view, animated: true)
+                MBProgressHUD.hide(for: self.view, animated: true)
             } else {
 //                self.errorView.isHidden = true
                 if let data = dataOrNil {
                     
                     let dictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String:Any]
-                    
-                    self.moviesDict = dictionary["results"] as! [[String: Any]]
-//                    self.moviesTable.reloadData()
-                    self.discoverCollection.reloadData()
+//                    let json = JSON(data)
+//                    if let results = json["results"].dictionary {
+//                        self.moviesDict = results
+//                    }
+                    self.moviesDict = dictionary["results"] as! [[String : Any]]
+                    print(self.moviesDict)
+                    self.discoverTableView.reloadData()
 //                    self.refreshControl.endRefreshing()
 //                    self.refreshCollectionControl.endRefreshing()
                     
                     // Hide HUD once the network request comes back
-//                    MBProgressHUD.hide(for: self.view, animated: true)
+                    MBProgressHUD.hide(for: self.view, animated: true)
                 }
             }
         });
@@ -75,55 +90,42 @@ class DiscoverViewController: UIViewController, UICollectionViewDataSource, UICo
         
     }
     
-    func calculateWidths() {
-        // Calculate cell size to make collection lay out in 3 columns
-        let posterwidth = (discoverCollection.frame.width / 3) - 4
-        let posterheight = (posterwidth * 1.5) + 30
-        let cellSize = CGSize(width: posterwidth, height: posterheight)
-        
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.itemSize = cellSize
-        layout.sectionInset = UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
-        layout.minimumLineSpacing = 1.0
-        layout.minimumInteritemSpacing = 1.0
-        
-        discoverCollection.setCollectionViewLayout(layout, animated: true)
-        discoverCollection.reloadData()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    // MARK: - TableView Data Source methods
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return moviesDict.count
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DiscoverCell", for: indexPath) as! DiscoverCollectionViewCell
-        let movie = moviesDict[indexPath.row]
-        let title: String = movie["title"] as! String
-        cell.titleLabel.text = title
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DiscoverCell", for: indexPath) as! DiscoverPortraitCell
         
-        if let posterPath = movie["poster_path"] as? String {
-            let posterBaseUrl = "http://image.tmdb.org/t/p/w500"
-            let posterUrl = URL(string: posterBaseUrl + posterPath)
-            cell.loadImage(imageVue: cell.posterView, imageUrl: posterUrl!)
+        let movie = moviesDict[indexPath.row]
+        if let title: String = movie["title"] as? String {
+            cell.movieTitleLabel.text = title
         }
-        else {
-            // No poster image. Can either set to nil (no image) or a default movie poster image
-            // that will be included as an asset
-            cell.posterView.image = nil
+        if let description: String = movie["overview"] as? String {
+            cell.movieDescriptionLabel.text = description
         }
+
+        let posterBaseUrl = "http://image.tmdb.org/t/p/w500"
+        guard let posterPath = movie["poster_path"] as? String, let posterUrl = URL(string: posterBaseUrl + posterPath) else {
+                // No poster image. Can either set to nil (no image) or a default movie poster image
+                // that will be included as an asset
+                cell.posterImageView.image = nil
+                return cell
+        }
+        cell.loadImage(for: cell.posterImageView, from: posterUrl)
         
         return cell
     }
     
-    // Customize selected behavior for collectionview
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = discoverCollection.cellForItem(at: indexPath) as! DiscoverCollectionViewCell
+    // Customize selected behavior for cell selection
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! DiscoverPortraitCell
         cell.backgroundColor = UIColor.darkGray
     }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = discoverCollection.cellForItem(at: indexPath) as! DiscoverCollectionViewCell
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! DiscoverPortraitCell
         cell.backgroundColor = UIColor.black
     }
 

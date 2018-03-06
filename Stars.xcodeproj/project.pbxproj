@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4ED8998089B0662C95F37639 /* Pods_Stars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 028A4ACD199B244F1EAFBD30 /* Pods_Stars.framework */; };
+		773A93B8204E547900D7C4A4 /* DiscoverPortraitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773A93B7204E547900D7C4A4 /* DiscoverPortraitCell.swift */; };
 		7774445C204CF4A600D346BD /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7774445B204CF4A600D346BD /* DiscoverViewController.swift */; };
 		7774445E204CF5F600D346BD /* DiscoverCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7774445D204CF5F600D346BD /* DiscoverCollectionViewCell.swift */; };
 		77975234204CF071006CA837 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77975233204CF071006CA837 /* AppDelegate.swift */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		028A4ACD199B244F1EAFBD30 /* Pods_Stars.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stars.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		773A93B7204E547900D7C4A4 /* DiscoverPortraitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPortraitCell.swift; sourceTree = "<group>"; };
 		7774445B204CF4A600D346BD /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		7774445D204CF5F600D346BD /* DiscoverCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCollectionViewCell.swift; sourceTree = "<group>"; };
 		77975230204CF071006CA837 /* Stars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stars.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				7774445D204CF5F600D346BD /* DiscoverCollectionViewCell.swift */,
+				773A93B7204E547900D7C4A4 /* DiscoverPortraitCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7774445E204CF5F600D346BD /* DiscoverCollectionViewCell.swift in Sources */,
+				773A93B8204E547900D7C4A4 /* DiscoverPortraitCell.swift in Sources */,
 				7774445C204CF4A600D346BD /* DiscoverViewController.swift in Sources */,
 				77975234204CF071006CA837 /* AppDelegate.swift in Sources */,
 			);
