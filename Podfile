@@ -9,4 +9,5 @@ target 'Stars' do
   pod 'AFNetworking'
   pod 'MBProgressHUD'
   pod 'SwiftyJSON'
+  pod 'youtube-ios-player-helper', '~> 0.1'
 end

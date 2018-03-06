@@ -27,7 +27,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QgI-Iw-MIZ" id="bxs-NS-rgG">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="104.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="105"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yB4-Rt-hoV">
@@ -67,6 +67,51 @@
                                             <outlet property="movieDescriptionLabel" destination="Zuw-U9-On6" id="fRT-fU-red"/>
                                             <outlet property="movieTitleLabel" destination="UUs-DP-BCY" id="VYB-tn-5YC"/>
                                             <outlet property="posterImageView" destination="yB4-Rt-hoV" id="vET-zG-fC4"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DiscoverLandscapeCell" rowHeight="99" id="AQl-VA-ObD" userLabel="DiscoverLandscapeCell" customClass="DiscoverLandscapeCell" customModule="Stars" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="133" width="375" height="99"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AQl-VA-ObD" id="son-PJ-pCI">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRe-WF-pby">
+                                                    <rect key="frame" x="230.5" y="12" width="95" height="49.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Movie Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Da-ei-h3f">
+                                                    <rect key="frame" x="230.5" y="69.5" width="116.5" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9QW-yJ-7aW" customClass="YTPlayerView">
+                                                    <rect key="frame" x="12" y="12" width="206.5" height="74.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="eRe-WF-pby" firstAttribute="leading" secondItem="9QW-yJ-7aW" secondAttribute="trailing" constant="12" id="6f4-Pe-byn"/>
+                                                <constraint firstItem="9QW-yJ-7aW" firstAttribute="width" secondItem="son-PJ-pCI" secondAttribute="width" multiplier="0.55" id="8KG-tp-lHH"/>
+                                                <constraint firstItem="6Da-ei-h3f" firstAttribute="top" secondItem="eRe-WF-pby" secondAttribute="bottom" constant="8" id="ECm-b6-iQn"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eRe-WF-pby" secondAttribute="trailing" constant="12" id="FyR-DZ-mSW"/>
+                                                <constraint firstItem="eRe-WF-pby" firstAttribute="top" secondItem="son-PJ-pCI" secondAttribute="top" constant="12" id="MzF-oE-3zB"/>
+                                                <constraint firstItem="9QW-yJ-7aW" firstAttribute="leading" secondItem="son-PJ-pCI" secondAttribute="leading" constant="12" id="QuL-Pv-fBD"/>
+                                                <constraint firstAttribute="bottom" secondItem="6Da-ei-h3f" secondAttribute="bottom" constant="12" id="ZVR-eK-8bY"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6Da-ei-h3f" secondAttribute="trailing" constant="12" id="b1W-dS-grG"/>
+                                                <constraint firstAttribute="bottom" secondItem="9QW-yJ-7aW" secondAttribute="bottom" constant="12" id="caX-5t-P4E"/>
+                                                <constraint firstItem="9QW-yJ-7aW" firstAttribute="top" secondItem="son-PJ-pCI" secondAttribute="top" constant="12" id="xK1-hY-vCI"/>
+                                                <constraint firstItem="6Da-ei-h3f" firstAttribute="leading" secondItem="eRe-WF-pby" secondAttribute="leading" id="yGZ-YB-ZlJ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="movieDescriptionLabel" destination="6Da-ei-h3f" id="eXw-H1-VSK"/>
+                                            <outlet property="movieTitleLabel" destination="eRe-WF-pby" id="9PQ-S0-pyL"/>
+                                            <outlet property="trailerView" destination="9QW-yJ-7aW" id="xaT-bk-lbF"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
